@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'dart:async';
+
 
 final String contactTable = "contactTable";
 final String idColumn = "idColumn";
@@ -9,11 +11,11 @@ final String phoneColumn = "phoneColumn";
 final String imgColumn = "imgColumn";
 
 class ContactHelper {
-  static final ContactHelper _instance = ContactHelper().internal();
+  static final ContactHelper _instance = ContactHelper.internal();
 
   factory ContactHelper() => _instance;
 
-  ContactHelper internal() {}
+  ContactHelper.internal();
 
   Database _db;
 
@@ -102,6 +104,8 @@ class Contact {
   String phone;
   String img;
 
+  Contact();
+
   Contact.fromMap(Map map) {
     id = map[idColumn];
     name = map[nameColumn];
@@ -125,6 +129,6 @@ class Contact {
 
   @override
   String toString() {
-    return "Contact(id: $id, name:$name, email:$email, phone:$phone, img:$img";
+    return "Contact(id: $id, name:$name, email:$email, phone:$phone, img:$img)";
   }
 }
