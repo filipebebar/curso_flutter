@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agendadecontatos/helpers/contact_page.dart';
 import 'package:flutter/material.dart';
 import 'package:agendadecontatos/helpers/contacts_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     _getAllContacts();
   }
 
@@ -91,9 +91,70 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onTap: () {
-        _showContactPage(contact: contacts[index]);
+        _showOptions(context, index);
       },
     );
+  }
+
+  void _showOptions(BuildContext context, int index) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+              onClosing: () {},
+              builder: (context) {
+                return Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                          child: Text(
+                            "Ligar",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          ),
+                          onPressed: () {
+                            launch("tel: ${contacts[index]}.phone");
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              _showContactPage(contact: contacts[index]);
+                            },
+                            child: Text(
+                              "Editar",
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 20.0),
+                            )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                            onPressed: () {
+                              helper.deleteContact(contacts[index].id);
+                              setState(() {
+                                contacts.removeAt(index);
+                                Navigator.pop(context);
+                              });
+                            },
+                            child: Text(
+                              "Excluir",
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 20.0),
+                            )),
+                      )
+                    ],
+                  ),
+                );
+              });
+        });
   }
 
   void _showContactPage({Contact contact}) async {
@@ -106,8 +167,10 @@ class _HomePageState extends State<HomePage> {
     if (recContact != null) {
       if (contact != null) {
         await helper.updateContact(recContact);
-        _getAllContacts();
+      } else {
+        await helper.saveContact(recContact);
       }
+      _getAllContacts();
     }
   }
 
