@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                         labelText: "Peso (kg)",
                         labelStyle: TextStyle(color: Colors.green)),
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.green, fontSize: 25.0),
+                    style: TextStyle(color: Colors.green, fontSize: 26.0),
                     controller: weightController,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
                         labelText: "Altura (cm)",
                         labelStyle: TextStyle(color: Colors.green)),
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.green, fontSize: 25.0),
+                    style: TextStyle(color: Colors.green, fontSize: 26.0),
                     controller: heightController,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
                         },
                         child: Text("Calcular",
                             style:
-                                TextStyle(color: Colors.white, fontSize: 25.0)),
+                                TextStyle(color: Colors.white, fontSize: 26.0)),
                         color: Colors.green,
                       ),
                     ),
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
                   Text(
                     _infoText,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.green, fontSize: 25.0),
+                    style: TextStyle(color: Colors.green, fontSize: 26.0),
                   )
                 ],
               ),
